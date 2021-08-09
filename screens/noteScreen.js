@@ -83,7 +83,7 @@ export default class NoteScreen extends React.Component {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <View style={styles.InputView}>
+          <View style={[styles.InputView, { margin: 10 }]}>
             <TextInput
               style={styles.TextInputStyle}
               autoCorrect={true}
@@ -117,27 +117,15 @@ export default class NoteScreen extends React.Component {
                 this.clearTask();
               }}
             >
-              {" "}
-              <Text>{this.state.notes.length === 0 ? "" : "Clear Notes"}</Text>
+              {this.state.notes.length === 0 ? (
+                <Text></Text>
+              ) : (
+                <Text>Clear Notes</Text>
+              )}
             </TouchableOpacity>
           </View>
 
-          <ScrollView
-            style={
-              this.state.notes.length < 2
-                ? [styles.display]
-                : [
-                    styles.display,
-                    {
-                      borderRadius: 20,
-                      shadowColor: "#000000",
-                      shadowOpacity: 5,
-                      shadowRadius: 2,
-                      elevation: 20,
-                    },
-                  ]
-            }
-          >
+          <ScrollView style={[styles.display]}>
             {this.state.notes.map((data) => (
               <View style={styles.listItems} key={data.num.toString()}>
                 <Pressable
@@ -165,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    margin: 10,
   },
   TextInputStyle: {
     marginLeft: "5%",
@@ -193,6 +180,7 @@ const styles = StyleSheet.create({
   },
 
   listItems: {
+    alignSelf: "center",
     padding: 10,
     marginVertical: 10,
     borderColor: "black",
@@ -202,7 +190,7 @@ const styles = StyleSheet.create({
   },
   display: {
     alignSelf: "center",
-    width: "80%",
+    width: "100%",
     maxHeight: 750,
   },
 });
