@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
-  Modal,
 } from "react-native";
 import db from "../config_firebase";
 import firebase from "firebase";
@@ -21,7 +20,6 @@ export default class NoteScreen extends React.Component {
       text: "",
       num: 0,
       notes: [],
-      isModalVisible: true,
     };
   }
 
@@ -42,25 +40,20 @@ export default class NoteScreen extends React.Component {
     });
   };
 
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
-  };
+  clearTask = () => {
+    var dataRef = db.ref("/");
+    dataRef.on("value", (data) => {
+      var dataList = data.val();
+    });
 
-  model = (key) => {
-    console.log(key)
-    return (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={this.state.isModalVisible}
-      >
-        <View style={styles.modalContainer} >
-          <TouchableOpacity>
-            <Text>Delete</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    );
+    dataRef.update({
+      notes: "",
+    });
+
+    this.setState({
+      notes: [],
+      num: 0,
+    });
   };
 
   updateInfo = () => {
@@ -116,7 +109,35 @@ export default class NoteScreen extends React.Component {
               />
             </TouchableOpacity>
           </View>
-          <ScrollView style={styles.display}>
+
+          <View style={{ width: "100%" }}>
+            <TouchableOpacity
+              style={styles.Clearbutton}
+              onPress={() => {
+                this.clearTask();
+              }}
+            >
+              {" "}
+              <Text>{this.state.notes.length === 0 ? "" : "Clear Notes"}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            style={
+              this.state.notes.length < 2
+                ? [styles.display]
+                : [
+                    styles.display,
+                    {
+                      borderRadius: 20,
+                      shadowColor: "#000000",
+                      shadowOpacity: 5,
+                      shadowRadius: 2,
+                      elevation: 20,
+                    },
+                  ]
+            }
+          >
             {this.state.notes.map((data) => (
               <View style={styles.listItems} key={data.num.toString()}>
                 <Pressable
@@ -166,6 +187,11 @@ const styles = StyleSheet.create({
     padding: 20,
     marginRight: "5%",
   },
+
+  Clearbutton: {
+    alignItems: "center",
+  },
+
   listItems: {
     padding: 10,
     marginVertical: 10,
@@ -177,22 +203,6 @@ const styles = StyleSheet.create({
   display: {
     alignSelf: "center",
     width: "80%",
-    maxHeight: 800,
-    shadowColor: "#7F5DF0",
-    shadowOpacity: 10,
-    shadowRadius: 3.5,
-    elevation: 20,
-  },
-
-  modalContainer: {
-    flex: 1,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffff",
-    marginRight: 30,
-    marginLeft: 30,
-    marginTop: 80,
-    marginBottom: 80,
+    maxHeight: 750,
   },
 });

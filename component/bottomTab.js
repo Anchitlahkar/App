@@ -41,7 +41,7 @@ export default function Tabs() {
                 }}
               />
               <Text style={{ color: focused ? "blue" : "#ffffff" }}>
-                Student List
+                Student_List
               </Text>
             </View>
           ),
@@ -89,7 +89,7 @@ export default function Tabs() {
                 }}
               />
               <Text style={{ color: focused ? "blue" : "#ffffff" }}>
-                New Entry
+                New_Entry
               </Text>
             </View>
           ),
@@ -127,11 +127,7 @@ export default function Tabs() {
 const styles = StyleSheet.create({
   bottomTabStyle: {
     position: "absolute",
-    bottom: "2%",
-    left: 15,
-    right: 15,
     backgroundColor: "#000000",
-    borderRadius: 15,
     height: "9.5%",
     elevation: 0,
   },
