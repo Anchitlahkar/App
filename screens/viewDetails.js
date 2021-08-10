@@ -7,11 +7,51 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Image
+  Image,
+  FlatList,
 } from "react-native";
 import db from "../config_firestore";
+import { ListItem } from "react-native-elements";
 
 export default class ViewDetails extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      details: "",
+    };
+  }
+
+  getStudentName = () => {
+    this.datatRef = db.collection("Student").onSnapshot((snapshot) => {
+      var studentList = snapshot.docs.map((document) => document.data());
+      this.setState({
+        details: studentList,
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.getStudentName();
+  }
+
+  renderItem = ({ item, idx }) => (
+    <ListItem
+      bottomDivider
+      {...console.log(item.name)}
+      onPress={() => {
+        this.props.navigation.navigate("Details", { planet_name: item.name });
+      }}
+    >
+      <ListItem.Content>
+        <ListItem.Title>{`Student Name: ${item.name}`}</ListItem.Title>
+        <ListItem.Subtitle>{`Number: ${item.contact}`}</ListItem.Subtitle>
+      </ListItem.Content>
+    </ListItem>
+  );
+
+  keyExtractor = (item, index) => index.toString();
+
   render() {
     return (
       <View style={styles.container}>
@@ -46,9 +86,15 @@ export default class ViewDetails extends React.Component {
         </View>
 
         {/* Item Display */}
-        <ScrollView style={styles.display}>
-          <Text>ViewDetails</Text>
-        </ScrollView>
+        <View style={{ alignSelf: "center" }}>
+          <ScrollView style={styles.display}>
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              data={this.state.details}
+              renderItem={this.renderItem}
+            />
+          </ScrollView>
+        </View>
 
         {/* precaution */}
         <View style={{ height: "20%" }}>
