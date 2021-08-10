@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from "react-native";
 import db from "../config_firestore";
-import firebase from "firebase";
 
 export default class AddDetails extends React.Component {
   constructor() {
