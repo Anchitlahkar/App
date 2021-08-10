@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
-  Pressable,
+  Dimensions,
 } from "react-native";
 import db from "../config_firebase";
 import firebase from "firebase";
@@ -20,6 +20,7 @@ export default class NoteScreen extends React.Component {
       text: "",
       num: 0,
       notes: [],
+      windowHeight: Dimensions.get("window").height,
     };
   }
 
@@ -79,6 +80,7 @@ export default class NoteScreen extends React.Component {
   }
 
   render() {
+    var { windowHeight } = this.state;
     return (
       <SafeAreaView>
         <View style={styles.container}>
@@ -124,18 +126,10 @@ export default class NoteScreen extends React.Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={[styles.display]}>
+          <ScrollView style={[styles.display, { maxHeight: windowHeight-100 }]}>
             {this.state.notes.map((data) => (
               <View style={styles.listItems} key={data.num.toString()}>
-                <Pressable
-                  delayLongPress={1500}
-                  onLongPress={() => {
-                    console.log("longpress");
-                    this.model(data.num);
-                  }}
-                >
-                  <Text>{`• ${data.data}`}</Text>
-                </Pressable>
+                <Text>{`• ${data.data}`}</Text>
               </View>
             ))}
           </ScrollView>
@@ -157,7 +151,8 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     borderColor: "black",
     borderRadius: 15,
-    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
     height: 45,
     width: "80%",
     padding: 10,
@@ -168,10 +163,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-  },
-  button: {
-    padding: 20,
-    marginRight: "5%",
   },
 
   Clearbutton: {
