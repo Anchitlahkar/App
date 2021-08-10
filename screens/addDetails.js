@@ -67,16 +67,17 @@ export default class AddDetails extends React.Component {
         <View
           style={
             this.state.windowHeight > 700
-              ? styles.ButtonView
-              : { alignSelf: "center", marginTop: "5%", alignItems: "center" }
+              ? { alignSelf: "center", marginTop: "5%", alignItems: "center" }
+              : styles.ButtonView
           }
         >
           <TouchableOpacity
             onPress={() => {
+              this.state.windowHeight > 700 ? console.log('not acceptable') :
               this.checkDetails("Student Added Successfully");
             }}
           >
-            <Text>Add Student</Text>
+            {this.state.windowHeight > 700 ? <Text> </Text>:<Text style={styles.buttonText} >Add Student</Text>}
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.display}>
@@ -130,11 +131,22 @@ export default class AddDetails extends React.Component {
                 this.setState({ doa: text });
               }}
             />
-            <View style={styles.ButtonView}>
-              <TouchableOpacity>
-                <Text> </Text>
-              </TouchableOpacity>
-            </View>
+            <View
+          style={
+            this.state.windowHeight > 700
+              ? styles.ButtonView
+              : { alignSelf: "center", marginTop: "5%", alignItems: "center" }
+          }
+        >
+          <TouchableOpacity
+            onPress={() => {
+              this.state.windowHeight > 700 ?this.checkDetails("Student Added Successfully")  :console.log('not acceptable')
+              
+            }}
+          >
+            {this.state.windowHeight > 700 ?<Text style={styles.buttonText} >Add Student</Text> :<Text> </Text>}
+          </TouchableOpacity>
+        </View>
           </View>
 
           <View style={{ height: "20%" }}>
@@ -170,8 +182,8 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     backgroundColor: "#016afb",
     borderRadius: 10,
-    width: 150,
-    height: 30,
+    width: 170,
+    height: 35,
     alignItems: "center",
   },
   display: {
@@ -179,4 +191,9 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 750,
   },
+  buttonText:{
+    fontSize: 23,
+    fontWeight: "bold",
+    color: "#fff",
+  }
 });
