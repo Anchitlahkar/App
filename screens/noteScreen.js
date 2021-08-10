@@ -35,7 +35,6 @@ export default class NoteScreen extends React.Component {
     });
 
     this.setState({
-      text: "",
       num: this.state.num + 1,
     });
   };
