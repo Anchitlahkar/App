@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   SafeAreaView,
   Image,
   FlatList,
@@ -38,9 +37,9 @@ export default class ViewDetails extends React.Component {
   renderItem = ({ item, idx }) => (
     <ListItem
       bottomDivider
-      {...console.log(item.name)}
       onPress={() => {
-        this.props.navigation.navigate("Details", { planet_name: item.name });
+            console.log(item)
+        this.props.navigation.navigate("details", { details: item });
       }}
     >
       <ListItem.Content>
@@ -86,15 +85,12 @@ export default class ViewDetails extends React.Component {
         </View>
 
         {/* Item Display */}
-        <View style={{ alignSelf: "center" }}>
-          <ScrollView style={styles.display}>
             <FlatList
               keyExtractor={this.keyExtractor}
               data={this.state.details}
               renderItem={this.renderItem}
             />
-          </ScrollView>
-        </View>
+
 
         {/* precaution */}
         <View style={{ height: "20%" }}>

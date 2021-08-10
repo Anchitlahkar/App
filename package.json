@@ -11,6 +11,7 @@
     "@react-native-firebase/firestore": "^12.3.0",
     "@react-navigation/bottom-tabs": "^6.0.2",
     "@react-navigation/native": "^6.0.2",
+    "@react-navigation/stack": "^6.0.4",
     "expo": "^42.0.3",
     "expo-status-bar": "~1.0.4",
     "firebase": "8.2.3",
@@ -18,7 +19,9 @@
     "react-dom": "16.13.1",
     "react-native": "D:\\Code\\Dreams\\App\\react-native-sdk-42.0.0.tar.gz",
     "react-native-elements": "^3.4.2",
-    "react-native-web": "^0.17.1"
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-web": "^0.17.1",
+    "react-navigation": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

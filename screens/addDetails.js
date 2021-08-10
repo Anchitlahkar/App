@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import db from "../config_firestore";
+import { CheckBox } from "react-native-elements";
 
 export default class AddDetails extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ export default class AddDetails extends React.Component {
       ma_name: "",
       number: "",
       address: "",
-      class: "",
+      fees: false,
       doa: "", //doa: Date of Addmision
       windowHeight: Dimensions.get("window").height,
     };
@@ -34,7 +35,7 @@ export default class AddDetails extends React.Component {
       mother_name: this.state.ma_name,
       contact: this.state.number,
       address: this.state.address,
-      class: this.state.class,
+      fees: this.state.fees,
       date_of_addmission: this.state.doa,
     });
     alert(message);
@@ -57,7 +58,14 @@ export default class AddDetails extends React.Component {
       <View style={styles.container}>
         <SafeAreaView />
 
-        <Text style={{ fontSize: 25, fontWeight: "bold", alignSelf: "center", marginTop: 20 }}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: "bold",
+            alignSelf: "center",
+            marginTop: 20,
+          }}
+        >
           Add Required Details Below:{" "}
         </Text>
 
@@ -71,11 +79,16 @@ export default class AddDetails extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
-              this.state.windowHeight > 700 ? console.log('not acceptable') :
-              this.checkDetails("Student Added Successfully");
+              this.state.windowHeight > 700
+                ? console.log("not acceptable")
+                : this.checkDetails("Student Added Successfully");
             }}
           >
-            {this.state.windowHeight > 700 ? <Text> </Text>:<Text style={styles.buttonText} >Add Student</Text>}
+            {this.state.windowHeight > 700 ? (
+              <Text> </Text>
+            ) : (
+              <Text style={styles.buttonText}>Add Student</Text>
+            )}
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.display}>
@@ -117,34 +130,49 @@ export default class AddDetails extends React.Component {
             />
             <TextInput
               style={styles.TextInputStyle}
-              placeholder="Class"
-              onChangeText={(text) => {
-                this.setState({ class: text });
-              }}
-            />
-            <TextInput
-              style={styles.TextInputStyle}
               placeholder="Date of Addimssion"
               onChangeText={(text) => {
                 this.setState({ doa: text });
               }}
             />
+            <CheckBox
+              center
+              title="Fees"
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checked={this.state.fees}
+              onPress={()=>{
+                this.setState({
+                  fees: !this.state.fees
+                })
+              }}
+            />
+
             <View
-          style={
-            this.state.windowHeight > 700
-              ? styles.ButtonView
-              : { alignSelf: "center", marginTop: "5%", alignItems: "center" }
-          }
-        >
-          <TouchableOpacity
-            onPress={() => {
-              this.state.windowHeight > 700 ?this.checkDetails("Student Added Successfully")  :console.log('not acceptable')
-              
-            }}
-          >
-            {this.state.windowHeight > 700 ?<Text style={styles.buttonText} >Add Student</Text> :<Text> </Text>}
-          </TouchableOpacity>
-        </View>
+              style={
+                this.state.windowHeight > 700
+                  ? styles.ButtonView
+                  : {
+                      alignSelf: "center",
+                      marginTop: "5%",
+                      alignItems: "center",
+                    }
+              }
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  this.state.windowHeight > 700
+                    ? this.checkDetails("Student Added Successfully")
+                    : console.log("not acceptable");
+                }}
+              >
+                {this.state.windowHeight > 700 ? (
+                  <Text style={styles.buttonText}>Add Student</Text>
+                ) : (
+                  <Text> </Text>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={{ height: "20%" }}>
@@ -189,9 +217,9 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 750,
   },
-  buttonText:{
+  buttonText: {
     fontSize: 23,
     fontWeight: "bold",
     color: "#fff",
-  }
+  },
 });
