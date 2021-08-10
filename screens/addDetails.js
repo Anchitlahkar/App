@@ -58,7 +58,7 @@ export default class AddDetails extends React.Component {
       <View style={styles.container}>
         <SafeAreaView />
 
-        <Text style={{ fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
+        <Text style={{ fontSize: 25, fontWeight: "bold", alignSelf: "center", marginTop: 20 }}>
           Add Required Details Below:{" "}
         </Text>
 
