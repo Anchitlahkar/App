@@ -23,7 +23,6 @@ export default class AddDetails extends React.Component {
       address: "",
       class: "",
       doa: "", //doa: Date of Addmision
-      windowWidth: Dimensions.get("window").width,
       windowHeight: Dimensions.get("window").height,
     };
   }
