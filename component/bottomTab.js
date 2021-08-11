@@ -2,9 +2,9 @@ import React from "react";
 import ViewDetails from "../screens/viewDetails";
 import AddDetails from "../screens/addDetails";
 import NoteScreen from "../screens/noteScreen";
+import SettingScreen from "../screens/Settings";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import StudentDetailsScreen from "../screens/StudentDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,8 +16,8 @@ export default function Tabs() {
           backgroundColor: "black",
         },
         headerTitleStyle: {
-          color: "#ffffff",
-          fontWeight: "bold",
+          color:'#ffffff',
+          fontWeight: 'bold',
         },
         tabBarShowLabel: false,
         tabBarStyle: [styles.bottomTabStyle, styles.shadowStyle],
@@ -96,14 +96,15 @@ export default function Tabs() {
         }}
       />
 
-  
-      {/* Student Details */}
-      <Tab.Screen name="details" component={StudentDetailsScreen}
+      {/* Settings */}
+      <Tab.Screen
+        name="Setting"
+        component={SettingScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
               <Image
-                source={require("../assets/icons/details.png")}
+                source={require("../assets/icons/settings.png")}
                 resizeMode="contain"
                 style={{
                   width: 25,
@@ -113,7 +114,7 @@ export default function Tabs() {
                 }}
               />
               <Text style={{ color: focused ? "blue" : "#ffffff" }}>
-                Student Details
+                Settings
               </Text>
             </View>
           ),

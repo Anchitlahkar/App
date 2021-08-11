@@ -11,7 +11,6 @@ import {
   Dimensions,
 } from "react-native";
 import db from "../config_firebase";
-import firebase from "firebase";
 
 export default class NoteScreen extends React.Component {
   constructor() {
@@ -82,62 +81,61 @@ export default class NoteScreen extends React.Component {
   render() {
     var { windowHeight } = this.state;
     return (
-      <SafeAreaView>
-        <View style={styles.container}>
-          <View style={[styles.InputView, { margin: 10 }]}>
-            <TextInput
-              style={styles.TextInputStyle}
-              autoCorrect={true}
-              multiline={true}
-              placeholder="Text"
-              onChangeText={(text) => {
-                this.setState({ text: text });
+      <View style={styles.container}>
+        <SafeAreaView />
+        <View style={[styles.InputView, { margin: 10 }]}>
+          <TextInput
+            style={styles.TextInputStyle}
+            autoCorrect={true}
+            multiline={true}
+            placeholder="Text"
+            onChangeText={(text) => {
+              this.setState({ text: text });
+            }}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              this.addNote();
+            }}
+          >
+            <Image
+              source={require("../assets/icons/add.png")}
+              resizeMode="contain"
+              style={{
+                width: 45,
+                height: 45,
               }}
             />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                this.addNote();
-              }}
-            >
-              <Image
-                source={require("../assets/icons/add.png")}
-                resizeMode="contain"
-                style={{
-                  width: 45,
-                  height: 45,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ width: "100%" }}>
-            <TouchableOpacity
-              style={styles.Clearbutton}
-              onPress={() => {
-                this.clearTask();
-              }}
-            >
-              {this.state.notes.length === 0 ? (
-                <Text></Text>
-              ) : (
-                <Text>Clear Notes</Text>
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView style={[styles.display, { maxHeight: windowHeight-100 }]}>
-            {this.state.notes.map((data) => (
-              <View style={styles.listItems} key={data.num.toString()}>
-                <Text>{`• ${data.data}`}</Text>
-              </View>
-            ))}
-          </ScrollView>
-          <View style={{ height: "20%" }}>
-            <Text> </Text>
-          </View>
+          </TouchableOpacity>
         </View>
-      </SafeAreaView>
+
+        <View style={{ width: "100%" }}>
+          <TouchableOpacity
+            style={styles.Clearbutton}
+            onPress={() => {
+              this.clearTask();
+            }}
+          >
+            {this.state.notes.length === 0 ? (
+              <Text></Text>
+            ) : (
+              <Text>Clear Notes</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView style={[styles.display, { maxHeight: windowHeight - 100 }]}>
+          {this.state.notes.map((data) => (
+            <View style={styles.listItems} key={data.num.toString()}>
+              <Text>{`• ${data.data}`}</Text>
+            </View>
+          ))}
+        </ScrollView>
+        <View style={{ height: "20%" }}>
+          <Text> </Text>
+        </View>
+      </View>
     );
   }
 }

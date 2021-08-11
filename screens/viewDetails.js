@@ -17,29 +17,45 @@ export default class ViewDetails extends React.Component {
     super();
 
     this.state = {
-      details: "",
+      details: [],
+      text: "",
+      showDetails: []
     };
   }
 
   getStudentName = () => {
-    this.datatRef = db.collection("Student").onSnapshot((snapshot) => {
-      var studentList = snapshot.docs.map((document) => document.data());
-      this.setState({
-        details: studentList,
+      console.log("mount");
+      this.datatRef = db.collection("Student").onSnapshot((snapshot) => {
+        var studentList = snapshot.docs.map((document) => document.data());
+        this.setState({
+          details: studentList,
+          showDetails: studentList,
+        });
       });
-    });
   };
 
-  componentDidMount() {
-    this.getStudentName();
-  }
+  search = (text) => {
+    var {details} = this.state
+    var searchDetails = []
+
+    for (var data in details){
+      if(text.includes(details[data].name)){
+        searchDetails.push(details[data])
+      }
+    }
+    searchDetails.length === 0 ?
+      this.setState({showDetails: details})
+      : this.setState({showDetails: searchDetails})
+  };
 
   renderItem = ({ item, idx }) => (
     <ListItem
       bottomDivider
       onPress={() => {
-            console.log(item)
-        this.props.navigation.navigate("details", { details: item });
+        console.log(item);
+        this.props.navigation.navigate("Student Details", {
+          full_details: item,
+        });
       }}
     >
       <ListItem.Content>
@@ -49,11 +65,15 @@ export default class ViewDetails extends React.Component {
     </ListItem>
   );
 
+  componentDidMount() {
+    this.getStudentName();
+  }
+
   keyExtractor = (item, index) => index.toString();
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={(styles.container, { height: this.state.windowHeight })}>
         <SafeAreaView />
 
         {/* Search Area */}
@@ -65,12 +85,13 @@ export default class ViewDetails extends React.Component {
             placeholder="Search"
             onChangeText={(text) => {
               this.setState({ text: text });
+              
             }}
           />
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.addNote();
+              this.search(this.state.text);
             }}
           >
             <Image
@@ -85,15 +106,15 @@ export default class ViewDetails extends React.Component {
         </View>
 
         {/* Item Display */}
-            <FlatList
-              keyExtractor={this.keyExtractor}
-              data={this.state.details}
-              renderItem={this.renderItem}
-            />
-
+        <FlatList
+          keyExtractor={this.keyExtractor}
+          data={this.state.showDetails}
+          renderItem={this.renderItem}
+        />
+        {console.log(this.state.showDetails)}
 
         {/* precaution */}
-        <View style={{ height: "20%" }}>
+        <View style={{ height: "10%" }}>
           <Text> </Text>
         </View>
       </View>

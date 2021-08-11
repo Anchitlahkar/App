@@ -38,7 +38,28 @@ export default class AddDetails extends React.Component {
       fees: this.state.fees,
       date_of_addmission: this.state.doa,
     });
+    this.AddFees();
     alert(message);
+  };
+
+  AddFees = () => {
+    if (this.state.fees === true) {
+      db.collection("Fees").add({
+        name: this.state.st_name,
+        Jan: "not-paid",
+        Feb: "not-paid",
+        Mar: "not-paid",
+        Apr: "not-paid",
+        May: "not-paid",
+        Jun: "not-paid",
+        Jul: "not-paid",
+        Aug: "not-paid",
+        Sep: "not-paid",
+        Oct: "not-paid",
+        Nov: "not-paid",
+        Dec: "not-paid",
+      });
+    }
   };
 
   checkDetails = (alertText) => {
@@ -141,10 +162,10 @@ export default class AddDetails extends React.Component {
               checkedIcon="dot-circle-o"
               uncheckedIcon="circle-o"
               checked={this.state.fees}
-              onPress={()=>{
+              onPress={() => {
                 this.setState({
-                  fees: !this.state.fees
-                })
+                  fees: !this.state.fees,
+                });
               }}
             />
 
