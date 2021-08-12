@@ -13,9 +13,7 @@ export default class SettingScreen extends React.Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
-        <View style={{ height: "20%" }}>
-          <Text> </Text>
-        </View>
+          <Text style={{fontSize: 22}}> Coming Soon!!! </Text>
       </View>
     );
   }
@@ -25,6 +23,9 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: 'center'
   },
   TextInputStyle: {
     marginLeft: "5%",

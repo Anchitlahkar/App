@@ -21,7 +21,7 @@ export default class AddDetails extends React.Component {
       fa_name: "",
       ma_name: "",
       number: "",
-      address: "",
+      dob: "",
       fees: false,
       doa: "", //doa: Date of Addmision
       windowHeight: Dimensions.get("window").height,
@@ -34,7 +34,7 @@ export default class AddDetails extends React.Component {
       father_name: this.state.fa_name,
       mother_name: this.state.ma_name,
       contact: this.state.number,
-      address: this.state.address,
+      dob: this.state.dob,
       fees: this.state.fees,
       date_of_addmission: this.state.doa,
     });
@@ -144,9 +144,9 @@ export default class AddDetails extends React.Component {
             />
             <TextInput
               style={styles.TextInputStyle}
-              placeholder="Address"
+              placeholder="Date Of Birth"
               onChangeText={(text) => {
-                this.setState({ address: text });
+                this.setState({ dob: text });
               }}
             />
             <TextInput

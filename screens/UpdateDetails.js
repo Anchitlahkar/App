@@ -20,7 +20,7 @@ export default class UpdateDetailsScreen extends React.Component {
       fa_name: "",
       ma_name: "",
       phone: "",
-      address: "",
+      dob: "",
       doa: "",
       fees: "",
       Apr: "",
@@ -51,7 +51,7 @@ export default class UpdateDetailsScreen extends React.Component {
             fa_name: data.father_name,
             ma_name: data.mother_name,
             phone: data.contact,
-            address: data.address,
+            dob: data.dob,
             doa: data.date_of_addmission,
             fees: data.fees,
           });
@@ -77,19 +77,17 @@ export default class UpdateDetailsScreen extends React.Component {
             Mar: data.Mar,
             id_fees: document.id
           });
-          console.log(document.id)
         });
       });
   };
 
   updateDetails = () => {
-    console.log(this.state);
     db.collection("Student").doc(this.state.id_name).update({
       name: this.state.st_name,
       father_name: this.state.fa_name,
       mother_name: this.state.ma_name,
       contact: this.state.phone,
-      address: this.state.address,
+      dob: this.state.dob,
       date_of_addmission: this.state.doa,
     });
 
@@ -106,6 +104,7 @@ export default class UpdateDetailsScreen extends React.Component {
       Oct: this.state.Oct,
       Nov: this.state.Nov,
       Dec: this.state.Dec,
+      name: this.state.st_name,
     });
 
     alert("Details Updated");
@@ -116,7 +115,6 @@ export default class UpdateDetailsScreen extends React.Component {
   }
 
   render() {
-    console.log(this.state.id_name, this.state.id_fees)
     return (
       <View style={styles.container}>
         <SafeAreaView />
@@ -160,11 +158,11 @@ export default class UpdateDetailsScreen extends React.Component {
               />
               <TextInput
                 style={styles.TextInputStyle}
-                placeholder="Address"
+                placeholder="Date Of Birth"
                 onChangeText={(text) => {
-                  this.setState({ address: text });
+                  this.setState({ dob: text });
                 }}
-                value={this.state.address}
+                value={this.state.dob}
               />
               <TextInput
                 style={styles.TextInputStyle}

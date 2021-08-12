@@ -32,15 +32,13 @@ export default class StudentDetailsScreen extends React.Component {
           this.setState({
             fees: data
           });
-          console.log(data)
         });
       });
   };
-  };
+  
 
   fees = (fees_t_F) => {
     var fees = this.state.fees;
-    console.log(fees);
 
     if (fees_t_F) {
       return (
@@ -103,7 +101,6 @@ export default class StudentDetailsScreen extends React.Component {
   }
 
   render() {
-    console.log(this.state.fees);
     const { details } = this.state;
     return (
       <View style={styles.container}>
@@ -123,7 +120,7 @@ export default class StudentDetailsScreen extends React.Component {
               <Text style={styles.cardItem}>{`Phone: ${details.contact}`}</Text>
               <Text
                 style={styles.cardItem}
-              >{`Address: ${details.address}`}</Text>
+              >{`Date of birth: ${details.dob}`}</Text>
               <Text
                 style={styles.cardItem}
               >{`Date of addmission: ${details.date_of_addmission}`}</Text>

@@ -24,7 +24,6 @@ export default class ViewDetails extends React.Component {
   }
 
   getStudentName = () => {
-      console.log("mount");
       this.datatRef = db.collection("Student").onSnapshot((snapshot) => {
         var studentList = snapshot.docs.map((document) => document.data());
         this.setState({
@@ -52,7 +51,6 @@ export default class ViewDetails extends React.Component {
     <ListItem
       bottomDivider
       onPress={() => {
-        console.log(item);
         this.props.navigation.navigate("Student Details", {
           full_details: item,
         });
@@ -111,7 +109,6 @@ export default class ViewDetails extends React.Component {
           data={this.state.showDetails}
           renderItem={this.renderItem}
         />
-        {console.log(this.state.showDetails)}
 
         {/* precaution */}
         <View style={{ height: "10%" }}>
