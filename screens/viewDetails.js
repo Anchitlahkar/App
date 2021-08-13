@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,9 +8,9 @@ import {
   SafeAreaView,
   Image,
   FlatList,
-} from "react-native";
-import db from "../config_firestore";
-import { ListItem } from "react-native-elements";
+} from 'react-native';
+import db from '../config_firestore';
+import { ListItem } from 'react-native-elements';
 
 export default class ViewDetails extends React.Component {
   constructor() {
@@ -18,48 +18,60 @@ export default class ViewDetails extends React.Component {
 
     this.state = {
       details: [],
-      text: "",
-      showDetails: []
+      text: '',
+      showDetails: [],
+      feesDetails: [],
     };
   }
 
   getStudentName = () => {
-      this.datatRef = db.collection("Student").onSnapshot((snapshot) => {
-        var studentList = snapshot.docs.map((document) => document.data());
-        this.setState({
-          details: studentList,
-          showDetails: studentList,
-        });
+    this.datatRef = db.collection('Student').onSnapshot((snapshot) => {
+      var studentList = snapshot.docs.map((document) => document.data());
+      this.setState({
+        details: studentList,
+        showDetails: studentList,
       });
+    });
   };
 
   search = (text) => {
-    var {details} = this.state
-    var searchDetails = []
+    var { details } = this.state;
+    var searchDetails = [];
 
-    for (var data in details){
-      if(text.includes(details[data].name)){
-        searchDetails.push(details[data])
+    for (var data in details) {
+      if (text.includes(details[data].name)) {
+        searchDetails.push(details[data]);
       }
     }
-    searchDetails.length === 0 ?
-      this.setState({showDetails: details})
-      : this.setState({showDetails: searchDetails})
+    if(text ==='fees'){
+      for(var data in details){
+        if(this.state.details[data].fees === true){
+        searchDetails.push(details[data])
+        }
+
+      }
+    }
+    console.log(searchDetails.length)
+    searchDetails.length === 0
+      ? this.setState({ showDetails: details })
+      : this.setState({ showDetails: searchDetails });
   };
 
   renderItem = ({ item, idx }) => (
     <ListItem
       bottomDivider
       onPress={() => {
-        this.props.navigation.navigate("Student Details", {
+        this.props.navigation.navigate('Student Details', {
           full_details: item,
         });
-      }}
-    >
-      <ListItem.Content>
-        <ListItem.Title>{`Student Name: ${item.name}`}</ListItem.Title>
-        <ListItem.Subtitle>{`Number: ${item.contact}`}</ListItem.Subtitle>
-      </ListItem.Content>
+      }}>
+      <View>
+        <ListItem.Content>
+          <ListItem.Title>{`Student Name: ${item.name}`}</ListItem.Title>
+          <ListItem.Subtitle>{`Number: ${item.contact}`}</ListItem.Subtitle>
+        </ListItem.Content>
+      </View>
+      {item.fees?<Text style={{ color: 'green', fontSize: 25 }}>•</Text>:<Text></Text>}
     </ListItem>
   );
 
@@ -83,17 +95,15 @@ export default class ViewDetails extends React.Component {
             placeholder="Search"
             onChangeText={(text) => {
               this.setState({ text: text });
-              
             }}
           />
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
               this.search(this.state.text);
-            }}
-          >
+            }}>
             <Image
-              source={require("../assets/icons/search.png")}
+              source={require('../assets/icons/search.png')}
               resizeMode="contain"
               style={{
                 width: 45,
@@ -111,7 +121,7 @@ export default class ViewDetails extends React.Component {
         />
 
         {/* precaution */}
-        <View style={{ height: "10%" }}>
+        <View style={{ height: '10%' }}>
           <Text> </Text>
         </View>
       </View>
@@ -121,29 +131,24 @@ export default class ViewDetails extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   TextInputStyle: {
-    marginLeft: "5%",
-    borderColor: "black",
+    marginLeft: '5%',
+    borderColor: 'black',
     borderRadius: 15,
     borderBottomWidth: 2,
     borderTopWidth: 2,
     height: 45,
-    width: "80%",
+    width: '80%',
     padding: 10,
     margin: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   InputView: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  display: {
-    alignSelf: "center",
-    width: "100%",
-    maxHeight: 750,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
 });
