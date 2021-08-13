@@ -20,7 +20,7 @@ export default class UpdateDetailsScreen extends React.Component {
       fa_name: "",
       ma_name: "",
       phone: "",
-      dob: "",
+      address: "",
       doa: "",
       fees: "",
       Apr: "",
@@ -51,7 +51,7 @@ export default class UpdateDetailsScreen extends React.Component {
             fa_name: data.father_name,
             ma_name: data.mother_name,
             phone: data.contact,
-            dob: data.dob,
+            address: data.address,
             doa: data.date_of_addmission,
             fees: data.fees,
           });
@@ -87,7 +87,7 @@ export default class UpdateDetailsScreen extends React.Component {
       father_name: this.state.fa_name,
       mother_name: this.state.ma_name,
       contact: this.state.phone,
-      dob: this.state.dob,
+      address: this.state.address,
       date_of_addmission: this.state.doa,
     });
 
@@ -158,11 +158,11 @@ export default class UpdateDetailsScreen extends React.Component {
               />
               <TextInput
                 style={styles.TextInputStyle}
-                placeholder="Date Of Birth"
+                placeholder="Address"
                 onChangeText={(text) => {
-                  this.setState({ dob: text });
+                  this.setState({ address: text });
                 }}
-                value={this.state.dob}
+                value={this.state.address}
               />
               <TextInput
                 style={styles.TextInputStyle}
