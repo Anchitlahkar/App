@@ -10,7 +10,7 @@ import {
   FlatList,
 } from 'react-native';
 import db from '../config_firestore';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 
 export default class ViewDetails extends React.Component {
   constructor() {
@@ -39,20 +39,24 @@ export default class ViewDetails extends React.Component {
     var searchDetails = [];
 
     for (var data in details) {
-      if (text.includes(details[data].name)) {
+      if (
+        text
+          .split(' ')[0]
+          .toLowerCase()
+          .includes(details[data].name.split(' ')[0].toLowerCase())
+      ) {
         searchDetails.push(details[data]);
       }
     }
-    if(text ==='fees'){
-      for(var data in details){
-        if(this.state.details[data].fees === true){
-        searchDetails.push(details[data])
+    if (text === 'fees') {
+      for (var data_preList in details) {
+        if (this.state.details[data_preList].fees === true) {
+          searchDetails.push(details[data_preList]);
         }
-
       }
     }
-    console.log(searchDetails.length)
-    searchDetails.length === 0
+    console.log(text);
+    text === ''
       ? this.setState({ showDetails: details })
       : this.setState({ showDetails: searchDetails });
   };
@@ -71,9 +75,18 @@ export default class ViewDetails extends React.Component {
           <ListItem.Subtitle>{`Number: ${item.contact}`}</ListItem.Subtitle>
         </ListItem.Content>
       </View>
-      {item.fees?<Text style={{ color: 'green', fontSize: 25 }}>•</Text>:<Text></Text>}
+      {item.fees ? (
+        <Text style={{ color: 'green', fontSize: 25 }}>•</Text>
+      ) : (
+        <Text></Text>
+      )}
     </ListItem>
   );
+
+  updateSearch = (text) => {
+    this.setState({ text });
+    this.search(text);
+  };
 
   componentDidMount() {
     this.getStudentName();
@@ -82,36 +95,18 @@ export default class ViewDetails extends React.Component {
   keyExtractor = (item, index) => index.toString();
 
   render() {
+    const { text } = this.state;
     return (
       <View style={(styles.container, { height: this.state.windowHeight })}>
         <SafeAreaView />
 
         {/* Search Area */}
-        <View style={[styles.InputView, { margin: 10 }]}>
-          <TextInput
-            style={styles.TextInputStyle}
-            autoCorrect={true}
-            multiline={true}
-            placeholder="Search"
-            onChangeText={(text) => {
-              this.setState({ text: text });
-            }}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              this.search(this.state.text);
-            }}>
-            <Image
-              source={require('../assets/icons/search.png')}
-              resizeMode="contain"
-              style={{
-                width: 45,
-                height: 45,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+
+        <SearchBar
+          placeholder="Type Here..."
+          onChangeText={this.updateSearch}
+          value={text}
+        />
 
         {/* Item Display */}
         <FlatList
@@ -133,22 +128,5 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-  },
-  TextInputStyle: {
-    marginLeft: '5%',
-    borderColor: 'black',
-    borderRadius: 15,
-    borderBottomWidth: 2,
-    borderTopWidth: 2,
-    height: 45,
-    width: '80%',
-    padding: 10,
-    margin: 10,
-    alignItems: 'center',
-  },
-  InputView: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
 });
