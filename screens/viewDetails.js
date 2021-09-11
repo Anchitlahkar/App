@@ -56,6 +56,7 @@ export default class ViewDetails extends React.Component {
       }
     }
     console.log(text);
+    console.log(searchDetails);
     text === ''
       ? this.setState({ showDetails: details })
       : this.setState({ showDetails: searchDetails });
@@ -98,8 +99,6 @@ export default class ViewDetails extends React.Component {
     const { text } = this.state;
     return (
       <View style={(styles.container, { height: this.state.windowHeight })}>
-        <SafeAreaView />
-
         {/* Search Area */}
 
         <SearchBar
